@@ -95,7 +95,6 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false; // Verifique se o objeto é nulo ou se não é do mesmo tipo
 
         User user = (User) o;
-
         return Objects.equals(id, user.id) &&
                 Objects.equals(userName, user.userName) &&
                 Objects.equals(email, user.email); // Inclui o campo `email`
