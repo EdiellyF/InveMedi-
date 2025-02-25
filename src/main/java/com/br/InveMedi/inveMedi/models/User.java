@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +22,11 @@ public class User {
 
     public interface UpdateUser {
     }
+
+
+
+    @OneToMany(mappedBy = "user")
+    private List<ItemEstoqueHospitalar> itens = new ArrayList<>();
 
 
     public static final String TABLE_NAME = "usuario";
@@ -39,6 +46,7 @@ public class User {
     @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = CreateUser.class, min = 2, max = 100)
     private String email;
+
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", length = 60, nullable = false)
@@ -95,7 +103,6 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false; // Verifique se o objeto é nulo ou se não é do mesmo tipo
 
         User user = (User) o;
-
         return Objects.equals(id, user.id) &&
                 Objects.equals(userName, user.userName) &&
                 Objects.equals(email, user.email); // Inclui o campo `email`
