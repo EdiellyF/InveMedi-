@@ -12,7 +12,9 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = User.TABLE_NAME)
+@Table(name = User.TABLE_NAME,
+        uniqueConstraints = @UniqueConstraint(columnNames = "email")
+)
 public class User {
 
 
@@ -30,13 +32,11 @@ public class User {
     private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true)
-    @NotNull(groups = CreateUser.class)
     @NotEmpty(groups = CreateUser.class)
     @Size(groups = CreateUser.class, min = 2, max = 100)
     private String userName;
 
-    @Column(name = "email", length = 100, nullable = false)
-    @NotNull(groups = {CreateUser.class, UpdateUser.class})
+    @Column(name = "email", length = 100, nullable = false, unique = true)
     @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = CreateUser.class, min = 2, max = 100)
     private String email;
