@@ -32,13 +32,11 @@ public class User {
     private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true)
-    @NotNull(groups = CreateUser.class)
     @NotEmpty(groups = CreateUser.class)
     @Size(groups = CreateUser.class, min = 2, max = 100)
     private String userName;
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
-    @NotNull(groups = {CreateUser.class, UpdateUser.class})
     @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = CreateUser.class, min = 2, max = 100)
     private String email;
