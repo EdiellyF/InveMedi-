@@ -1,3 +1,4 @@
+
 package com.br.InveMedi.inveMedi.models;
 
 import com.br.InveMedi.inveMedi.models.enums.Cargo;
