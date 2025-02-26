@@ -12,7 +12,9 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = User.TABLE_NAME)
+@Table(name = User.TABLE_NAME,
+        uniqueConstraints = @UniqueConstraint(columnNames = "email")
+)
 public class User {
 
 

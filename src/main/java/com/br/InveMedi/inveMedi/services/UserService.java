@@ -1,9 +1,7 @@
 package com.br.InveMedi.inveMedi.services;
 
-import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
-import com.br.InveMedi.inveMedi.models.TipoItemHospitalar;
+import org.springframework.beans.BeanUtils;
 import com.br.InveMedi.inveMedi.models.User;
-import com.br.InveMedi.inveMedi.repositories.ItemEstoqueHospitalarRepository;
 import com.br.InveMedi.inveMedi.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +34,22 @@ public class UserService {
 
 
     @Transactional
-    public User update(User user){
+    public User update(User user) {
         User newObj = findById(user.getId());
-        newObj.setPassword(newObj.getPassword());
-        newObj.setEmail(newObj.getEmail());
+
+        if (user.getPassword() != null) {
+            newObj.setPassword(user.getPassword());
+        }
+
+        if (user.getEmail() != null) {
+            newObj.setEmail(user.getEmail());
+        }
+
         return this.userRepository.save(newObj);
     }
 
 
+    @Transactional
     public void delete(Long id){
         findById(id);
         try {
