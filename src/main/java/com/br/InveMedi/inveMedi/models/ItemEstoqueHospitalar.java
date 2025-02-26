@@ -20,7 +20,6 @@ public class ItemEstoqueHospitalar {
 
 
     @Column(name = "nome_item", nullable = false)
-    @Size(min = 3, max = 255)
     private String nomeItem;
 
 
