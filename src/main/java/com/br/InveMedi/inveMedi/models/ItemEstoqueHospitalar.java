@@ -58,6 +58,10 @@ public class ItemEstoqueHospitalar {
         this.id = id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getNomeItem() {
         return nomeItem;
     }
