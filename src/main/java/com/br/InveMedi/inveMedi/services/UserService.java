@@ -17,8 +17,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ItemEstoqueHospitalarRepository itemEstoqueHospitalarRepository;
+
 
 
     public User findById(Long id){
