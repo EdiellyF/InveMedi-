@@ -27,8 +27,10 @@ public class ItemEstoqueService {
     @Transactional
     public ItemEstoqueHospitalar create(ItemEstoqueHospitalar obj){
         User user = this.userService.findById(obj.getUser().getId());
+     controllers/controllers
         obj.setUser(user);
         obj.setId(null);
+
         obj = this.itemEstoqueHospitalarRepository.save(obj);
         return obj;
 
