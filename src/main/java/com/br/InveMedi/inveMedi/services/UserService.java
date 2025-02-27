@@ -1,6 +1,7 @@
 package com.br.InveMedi.inveMedi.services;
 
 
+
 import org.springframework.beans.BeanUtils;
 import com.br.InveMedi.inveMedi.models.User;
 import com.br.InveMedi.inveMedi.models.User;
@@ -37,7 +38,7 @@ public class UserService {
 
 
     @Transactional
-controllers/controllers
+
     public User update(User user) {
         User newObj = findById(user.getId());
 
@@ -48,6 +49,8 @@ controllers/controllers
         if (user.getEmail() != null) {
             newObj.setEmail(user.getEmail());
         }
+        return this.userRepository.save(newObj);
+    }
 
 
     @Transactional
