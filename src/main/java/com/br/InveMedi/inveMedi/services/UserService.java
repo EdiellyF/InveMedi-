@@ -1,6 +1,5 @@
 package com.br.InveMedi.inveMedi.services;
 
-import org.springframework.beans.BeanUtils;
 import com.br.InveMedi.inveMedi.models.User;
 import com.br.InveMedi.inveMedi.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -28,6 +27,8 @@ public class UserService {
     @Transactional
     public User create(User obj){
         obj.setId(null);
+
+
         obj = this.userRepository.save(obj);
         return obj;
     }

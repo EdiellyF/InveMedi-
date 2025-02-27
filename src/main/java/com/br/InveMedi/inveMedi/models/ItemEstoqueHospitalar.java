@@ -13,7 +13,6 @@ public class ItemEstoqueHospitalar {
 
     public static final String TABLE_NAME = "item_estoque_hospitalar";
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,12 +23,11 @@ public class ItemEstoqueHospitalar {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_item_id", nullable = false)
-    private TipoItemHospitalar tipoItem;
+
+
 
     @Column(name = "quantidade_estoque", nullable = false)
     private Integer quantidadeEstoque;
@@ -46,13 +44,7 @@ public class ItemEstoqueHospitalar {
 
     }
 
-    public ItemEstoqueHospitalar(Long id, String nome, Integer quantidadeEstoque, Integer quantidadeMinima, LocalDate dataValidade) {
-        this.id = id;
-        this.dataValidade = dataValidade;
-        this.quantidadeEstoque = quantidadeEstoque;
-        this.quantidadeMinima = quantidadeMinima;
-        this.nomeItem = nome;
-    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -78,13 +70,7 @@ public class ItemEstoqueHospitalar {
         this.user = user;
     }
 
-    public TipoItemHospitalar getTipoItem() {
-        return tipoItem;
-    }
 
-    public void setTipoItem(TipoItemHospitalar tipoItem) {
-        this.tipoItem = tipoItem;
-    }
 
     public Integer getQuantidadeEstoque() {
         return quantidadeEstoque;
@@ -110,17 +96,16 @@ public class ItemEstoqueHospitalar {
         this.dataValidade = dataValidade;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ItemEstoqueHospitalar that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(getNomeItem(), that.getNomeItem()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getTipoItem(), that.getTipoItem());
+        return Objects.equals(id, that.id) && Objects.equals(getNomeItem(), that.getNomeItem()) && Objects.equals(getUser(), that.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, getNomeItem(), getUser(), getTipoItem());
+        return Objects.hash(id, getNomeItem(), getUser());
     }
 }
 
