@@ -1,11 +1,15 @@
 package com.br.InveMedi.inveMedi.services;
 
+import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
 import com.br.InveMedi.inveMedi.models.User;
 import com.br.InveMedi.inveMedi.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,5 +63,7 @@ public class UserService {
             throw  new RuntimeException("Não é possivel excluir entidade relacionada");
         }
     }
+
+
 
 }
