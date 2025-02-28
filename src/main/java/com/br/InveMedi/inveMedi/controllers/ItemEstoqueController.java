@@ -1,6 +1,7 @@
 package com.br.InveMedi.inveMedi.controllers;
 
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
+import com.br.InveMedi.inveMedi.repositories.ItemEstoqueHospitalarRepository;
 import com.br.InveMedi.inveMedi.services.ItemEstoqueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,19 +10,30 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/itens")
 @Validated
 public class ItemEstoqueController {
 
-    @Autowired
     private ItemEstoqueService itemEstoqueService;
+
+
+    public ItemEstoqueController (ItemEstoqueService itemEstoqueService) {
+        this.itemEstoqueService = itemEstoqueService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ItemEstoqueHospitalar> findById(@PathVariable Long id){
         ItemEstoqueHospitalar obj =  itemEstoqueService.findById(id);
         return ResponseEntity.ok(obj);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ItemEstoqueHospitalar>> findAllUserId(@PathVariable Long userId){
+        List<ItemEstoqueHospitalar> objs = this.itemEstoqueService.findAllByUserId(userId);
+        return ResponseEntity.ok().body(objs);
     }
 
     @PostMapping
@@ -32,6 +44,24 @@ public class ItemEstoqueController {
                 .path("/{id}").buildAndExpand(itemEstoqueHospitalar.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping("/{id}")
+    @Validated
+    public  ResponseEntity<Void> update(@Validated @RequestBody ItemEstoqueHospitalar itemEstoqueHospitalar, @PathVariable Long id){
+        itemEstoqueHospitalar.setId(id);
+        itemEstoqueService.update(itemEstoqueHospitalar);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Validated
+    public ResponseEntity<Void> delete(@Validated @PathVariable Long id){
+        itemEstoqueService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 
