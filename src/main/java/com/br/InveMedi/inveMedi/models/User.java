@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -15,6 +16,13 @@ import java.util.Objects;
 @Table(name = User.TABLE_NAME,
         uniqueConstraints = @UniqueConstraint(columnNames = "email")
 )
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+
 public class User {
 
 
@@ -52,46 +60,7 @@ public class User {
     @Column(name = "cargo", nullable = false)
     private Cargo cargo;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-
-    public @NotNull(groups = CreateUser.class) @NotEmpty(groups = CreateUser.class) @Size(groups = CreateUser.class, min = 2, max = 100) String getUserName() {
-        return userName;
-    }
-
-
-    public @NotNull(groups = {CreateUser.class, UpdateUser.class}) @NotEmpty(groups = {CreateUser.class, UpdateUser.class}) @Size(groups = CreateUser.class, min = 2, max = 100) String getEmail() {
-        return email;
-    }
-
-    public void setEmail(@NotNull(groups = {CreateUser.class, UpdateUser.class}) @NotEmpty(groups = {CreateUser.class, UpdateUser.class}) @Size(groups = CreateUser.class, min = 2, max = 100) String email) {
-        this.email = email;
-    }
-
-    public @NotNull(groups = {CreateUser.class, UpdateUser.class}) @NotEmpty(groups = {CreateUser.class, UpdateUser.class}) @Size(groups = {CreateUser.class, UpdateUser.class}, min = 6, max = 60) String getPassword() {
-        return password;
-    }
-
-    public void setPassword(@NotNull(groups = {CreateUser.class, UpdateUser.class}) @NotEmpty(groups = {CreateUser.class, UpdateUser.class}) @Size(groups = {CreateUser.class, UpdateUser.class}, min = 6, max = 60) String password) {
-        this.password = password;
-    }
-
-    public User() {
-    }
-
-    public Cargo getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -103,8 +72,6 @@ public class User {
                 Objects.equals(userName, user.userName) &&
                 Objects.equals(email, user.email); // Inclui o campo `email`
     }
-
-
 
     @Override
     public int hashCode() {

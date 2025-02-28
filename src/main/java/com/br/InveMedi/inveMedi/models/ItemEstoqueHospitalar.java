@@ -1,14 +1,19 @@
 package com.br.InveMedi.inveMedi.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.Objects;
 
 @Entity
 @Table(name = ItemEstoqueHospitalar.TABLE_NAME)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+
 public class ItemEstoqueHospitalar {
 
     public static final String TABLE_NAME = "item_estoque_hospitalar";
@@ -39,62 +44,6 @@ public class ItemEstoqueHospitalar {
 
     @Column(name = "data_validade")
     private LocalDate dataValidade;
-
-    public ItemEstoqueHospitalar() {
-
-    }
-
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNomeItem() {
-        return nomeItem;
-    }
-
-    public void setNomeItem(String nomeItem) {
-        this.nomeItem = nomeItem;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-
-
-    public Integer getQuantidadeEstoque() {
-        return quantidadeEstoque;
-    }
-
-    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
-    }
-
-    public Integer getQuantidadeMinima() {
-        return quantidadeMinima;
-    }
-
-    public void setQuantidadeMinima(Integer quantidadeMinima) {
-        this.quantidadeMinima = quantidadeMinima;
-    }
-
-    public LocalDate getDataValidade() {
-        return dataValidade;
-    }
-
-    public void setDataValidade(LocalDate dataValidade) {
-        this.dataValidade = dataValidade;
-    }
 
     @Override
     public boolean equals(Object o) {
