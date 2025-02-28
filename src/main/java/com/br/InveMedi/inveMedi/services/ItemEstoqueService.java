@@ -43,6 +43,7 @@ public class ItemEstoqueService {
     }
 
 
+    @Transactional
     public void delete(Long id){
         findById(id);
         try {

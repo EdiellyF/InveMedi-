@@ -1,9 +1,7 @@
 package com.br.InveMedi.inveMedi.controllers;
 
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
-import com.br.InveMedi.inveMedi.repositories.ItemEstoqueHospitalarRepository;
 import com.br.InveMedi.inveMedi.services.ItemEstoqueService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
