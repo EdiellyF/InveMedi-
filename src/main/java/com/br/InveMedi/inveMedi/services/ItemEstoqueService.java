@@ -21,6 +21,7 @@ public class ItemEstoqueService {
 
 
     public ItemEstoqueHospitalar findById(Long id){
+
         Optional<ItemEstoqueHospitalar> item = this.itemEstoqueHospitalarRepository.findById(id);
         return item.orElseThrow(() -> new RuntimeException("ItemHospital não encontrado +  id:" + id + ", Tipo: " + ItemEstoqueHospitalar.class.getName()));
     }
@@ -54,6 +55,7 @@ public class ItemEstoqueService {
     }
 
     public List<ItemEstoqueHospitalar> findAllByUserId(Long userId){
+        userService.findById(userId);
         List<ItemEstoqueHospitalar> itens = itemEstoqueHospitalarRepository.findByUser_Id(userId);
         return itens;
     }

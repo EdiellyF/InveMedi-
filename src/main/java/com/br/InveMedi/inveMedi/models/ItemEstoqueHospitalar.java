@@ -26,7 +26,6 @@ public class ItemEstoqueHospitalar {
     @Column(name = "nome_item", nullable = false)
     private String nomeItem;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
