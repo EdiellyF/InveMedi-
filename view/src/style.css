@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Nanum+Myeongjo&family=Poppins:ital,wght@0,500;0,700;1,400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:wght@100;300;500;700&display=swap');
+
+
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-color: #f8f9fa;
+}
+
+
+
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  width: 100%;
+    
+    
+}
+
+
+
+.main-header {
+    display: flex;
+    padding-top: 2rem;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0 2px 7px rgba(31, 100, 191, 0.7);
+    background-color: #f8f9fa; 
+    padding: 0 1rem;
+   
+}
+
+.main-header .logo-hospital {
+    font-weight: 900;
+    font-size: 4rem; 
+    color: #1F64BF;
+    margin-right: 1rem;
+}
+
+
+.main-header .main-title {
+    font-family: 'Poppins', cursive;
+    font-weight: 600;
+    font-size: 2rem;
+    padding-right: 1.0rem;
+    color: #181818; 
+
+    letter-spacing: 1px;
+}
+
+.main-header img {
+    width: 38%;
+    border-radius: 50%;
+}
+
+
+
+.main-section {
+   margin-top: 20px;
+   margin-bottom: 2px;
+}
