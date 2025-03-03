@@ -3,6 +3,8 @@ package com.br.InveMedi.inveMedi.services;
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
 import com.br.InveMedi.inveMedi.models.User;
 import com.br.InveMedi.inveMedi.repositories.ItemEstoqueHospitalarRepository;
+import com.br.InveMedi.inveMedi.services.exceptions.DataBindingViolationException;
+import com.br.InveMedi.inveMedi.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class ItemEstoqueService {
     public ItemEstoqueHospitalar findById(Long id){
 
         Optional<ItemEstoqueHospitalar> item = this.itemEstoqueHospitalarRepository.findById(id);
-        return item.orElseThrow(() -> new RuntimeException("ItemHospital não encontrado +  id:" + id + ", Tipo: " + ItemEstoqueHospitalar.class.getName()));
+        return item.orElseThrow(() -> new ObjectNotFoundException("ItemHospital não encontrado +  id:" + id + ", Tipo: " + ItemEstoqueHospitalar.class.getName()));
     }
 
     @Transactional
@@ -50,7 +52,7 @@ public class ItemEstoqueService {
         try {
             this.itemEstoqueHospitalarRepository.deleteById(id);
         }catch (Exception e){
-            throw new RuntimeException("Não é possivel deletar estoque do item");
+            throw new DataBindingViolationException("Não é possivel deletar estoque do item");
         }
     }
 

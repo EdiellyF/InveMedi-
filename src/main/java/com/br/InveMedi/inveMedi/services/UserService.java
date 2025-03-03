@@ -3,6 +3,8 @@ package com.br.InveMedi.inveMedi.services;
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
 import com.br.InveMedi.inveMedi.models.User;
 import com.br.InveMedi.inveMedi.repositories.UserRepository;
+import com.br.InveMedi.inveMedi.services.exceptions.DataBindingViolationException;
+import com.br.InveMedi.inveMedi.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class UserService {
     public User findById(Long id){
        Optional<User> user = this.userRepository.findById(id);
        return user.orElseThrow(
-               () -> new RuntimeException("Usuario não encontrando! ID" + id + ", Tipo: " + User.class.getName()) );
+               () -> new ObjectNotFoundException("Usuario não encontrando! ID" + id + ", Tipo: " + User.class.getName()) );
     }
 
 
@@ -60,7 +62,7 @@ public class UserService {
         try {
             this.userRepository.deleteById(id);
         }catch (Exception e){
-            throw  new RuntimeException("Não é possivel excluir entidade relacionada");
+            throw  new DataBindingViolationException("Não é possivel excluir entidade relacionada");
         }
     }
 
