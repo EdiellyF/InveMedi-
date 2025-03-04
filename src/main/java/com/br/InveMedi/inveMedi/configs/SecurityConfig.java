@@ -36,7 +36,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-
         return http
                 .cors(cors -> cors.disable()) // Desativa CORS (caso necessário)
                 .csrf(AbstractHttpConfigurer::disable) // Desativa CSRF corretamente
