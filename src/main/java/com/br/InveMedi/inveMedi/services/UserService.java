@@ -42,10 +42,7 @@ public class UserService {
     public User create(User obj){
         obj.setId(null);
         obj.setPassword(bCryptPasswordEncoder.encode(obj.getPassword()));
-
-
         obj.setProfiles(Stream.of(ProfileEnum.USER.getCode()).collect(Collectors.toSet()));
-
         obj = this.userRepository.save(obj);
         return obj;
     }
