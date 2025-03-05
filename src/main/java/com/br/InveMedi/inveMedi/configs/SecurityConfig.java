@@ -1,5 +1,6 @@
 package com.br.InveMedi.inveMedi.configs;
 
+
 import com.br.InveMedi.inveMedi.security.JWTAuthenticationFilter;
 import com.br.InveMedi.inveMedi.security.JwtUtil;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,8 @@ import java.util.Arrays;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 
 public class SecurityConfig {
 
@@ -33,6 +36,9 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
 
+    private UserDetailsService userDetailsService;
+
+
     public SecurityConfig(UserDetailsService userDetailsService, JwtUtil jwtUtil) {
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
@@ -40,8 +46,7 @@ public class SecurityConfig {
 
 
     private static final String[] PUBLIC_MATCHES = {
-            "/",
-            "/login"
+            "/"
     };
 
     private final String[] PUBLIC_MATCHES_POST = {
@@ -74,6 +79,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
@@ -91,4 +97,7 @@ public class SecurityConfig {
 
 
 
+
 }
+}
+
