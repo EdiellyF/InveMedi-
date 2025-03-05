@@ -1,5 +1,7 @@
 package com.br.InveMedi.inveMedi.configs;
 
+
+import com.br.InveMedi.inveMedi.security.JWTAuthenticationFilter;
 import com.br.InveMedi.inveMedi.security.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,12 +28,16 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
     private AuthenticationManager authenticationManager;
 
+    private final UserDetailsService userDetailsService;
+
     private UserDetailsService userDetailsService;
+
 
     public SecurityConfig(UserDetailsService userDetailsService, JwtUtil jwtUtil) {
         this.userDetailsService = userDetailsService;
@@ -50,31 +56,27 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-
-        AuthenticationManagerBuilder authenticationManagerBuilder = http
-                .getSharedObject(AuthenticationManagerBuilder.class);
-
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(this.userDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder());
+        return authenticationManagerBuilder.build();
+    }
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .cors().and()
+                .csrf().disable()
+                .authorizeRequests()
+                .requestMatchers("/login", "/register").permitAll() // Permite acesso sem autenticação
+                .anyRequest().authenticated() // Requer autenticação para todas as outras rotas
+                .and()
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(http), jwtUtil)) // Filtro JWT
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // API sem sessão
 
-        this.authenticationManager = authenticationManagerBuilder.build();
-
-        return http
-                .cors(cors -> cors.disable()) // Desativa CORS (caso necessário)
-                .csrf(AbstractHttpConfigurer::disable) // Desativa CSRF corretamente
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, PUBLIC_MATCHES_POST).permitAll() // Permite POST em rotas públicas
-                        .requestMatchers(PUBLIC_MATCHES).permitAll() // Permite acesso a rotas públicas
-                        .anyRequest().authenticated() // Todas as outras rotas precisam de autenticação
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // API sem sessão
-                )
-                .formLogin(withDefaults()) // Habilita login via formulário
-                .build();
-
+        return http.build();
     }
 
 
@@ -95,4 +97,7 @@ public class SecurityConfig {
 
 
 
+
 }
+}
+
