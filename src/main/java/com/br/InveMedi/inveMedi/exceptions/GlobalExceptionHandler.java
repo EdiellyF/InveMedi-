@@ -36,6 +36,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j(topic = "GLOBAL_EXCEPTION_HANDLER")
 @RestControllerAdvice
@@ -139,16 +141,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
-        Integer status = HttpStatus.FORBIDDEN.value();
+        Integer status = HttpStatus.UNAUTHORIZED.value(); // Alterado para 401
 
         response.setStatus(status);
         response.setContentType("application/json");
         ErrorResponse errorResponse = new ErrorResponse(status, "Invalid email or password, try again.");
         response.getWriter().append(errorResponse.toJson());
-
     }
-
 
 
 }
