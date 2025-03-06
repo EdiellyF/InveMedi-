@@ -1,19 +1,22 @@
 package com.br.InveMedi.inveMedi.services;
 
-import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
+
 import com.br.InveMedi.inveMedi.models.User;
 import com.br.InveMedi.inveMedi.models.enums.ProfileEnum;
 import com.br.InveMedi.inveMedi.repositories.UserRepository;
+import com.br.InveMedi.inveMedi.security.UserSpringSecurity;
+import com.br.InveMedi.inveMedi.services.exceptions.AuthorizationException;
 import com.br.InveMedi.inveMedi.services.exceptions.DataBindingViolationException;
 import com.br.InveMedi.inveMedi.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,10 +35,27 @@ public class UserService {
 
 
     public User findById(Long id){
+        UserSpringSecurity userSpringSecurity = authenticated();
+        if (Objects.isNull(userSpringSecurity) || !userSpringSecurity.hasRole(ProfileEnum.ADMIN) && !id.equals(userSpringSecurity.getId()) ) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+
        Optional<User> user = this.userRepository.findById(id);
        return user.orElseThrow(
                () -> new ObjectNotFoundException("Usuario não encontrando! ID" + id + ", Tipo: " + User.class.getName()) );
     }
+
+
+    public static UserSpringSecurity authenticated(){
+        try {
+            return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }catch (Exception e){
+             return null;
+        }
+    }
+
+
 
 
     @Transactional
@@ -49,7 +69,7 @@ public class UserService {
 
 
     @Transactional
-    public User update(User user) {
+    public  User update(User user) {
         User newObj = findById(user.getId());
 
 
