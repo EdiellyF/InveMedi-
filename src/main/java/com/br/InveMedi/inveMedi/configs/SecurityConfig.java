@@ -1,6 +1,7 @@
 package com.br.InveMedi.inveMedi.configs;
 
 import com.br.InveMedi.inveMedi.security.JWTAuthenticationFilter;
+import com.br.InveMedi.inveMedi.security.JWTAuthorizationFilter;
 import com.br.InveMedi.inveMedi.security.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,13 +41,11 @@ public class SecurityConfig {
 
 
     private static final String[] PUBLIC_MATCHES = {
-            "/",
-            "/login"
+            "/"
     };
 
     private final String[] PUBLIC_MATCHES_POST = {
-            "/user",
-            "/login"
+            "/user"
     };
 
 
@@ -67,9 +66,12 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/register").permitAll() // Permite acesso sem autenticação
                 .anyRequest().authenticated() // Requer autenticação para todas as outras rotas
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(http), jwtUtil)) // Filtro JWT
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(http), jwtUtil))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(http), jwtUtil, this.userDetailsService))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // API sem sessão
+
+
 
         return http.build();
     }

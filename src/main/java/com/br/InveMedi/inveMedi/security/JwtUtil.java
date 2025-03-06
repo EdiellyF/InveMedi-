@@ -54,6 +54,15 @@ public class JwtUtil {
         return false;
     }
 
+    public String getUsernameFromToken(String token) {
+        Claims claims = getClaimsFromToken(token);
+        if(Objects.nonNull(claims)){
+            return claims.getSubject();
+        }
+
+        return null;
+    }
+
 
     private Claims getClaimsFromToken(String token) {
         SecretKey key = getKeyBySecret();
