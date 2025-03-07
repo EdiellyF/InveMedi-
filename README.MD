@@ -38,9 +38,9 @@ InveMedi é um sistema de gerenciamento de estoque hospitalar desenvolvido com S
 
 ### Usuários
 
-- `GET /user/{id}`: Busca um usuário pelo ID
-- `POST /user`: Cria um novo usuário
-- `PUT /user/{id}`: Atualiza um usuário existente
+- `GET /user/{id}`: Busca um usuário pelo ID - somente usuarios admin tem essa posibilidade, coloque 1 no banco
+- `POST /user`: Cria um novo usuário // rota publica todos tem a autorizacao de criar um usuario
+- `PUT /user/{id}`: Atualiza um usuário existente - so o proprio e o admin pode atualizar
 - `DELETE /user/{id}`: Deleta um usuário
 
 ### Itens de Estoque

@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,14 +31,11 @@ public class UserService {
     private UserRepository userRepository;
 
 
-
-
     public User findById(Long id){
         UserSpringSecurity userSpringSecurity = authenticated();
         if (Objects.isNull(userSpringSecurity) || !userSpringSecurity.hasRole(ProfileEnum.ADMIN) && !id.equals(userSpringSecurity.getId()) ) {
             throw new AuthorizationException("Acesso negado");
         }
-
 
        Optional<User> user = this.userRepository.findById(id);
        return user.orElseThrow(

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
@@ -63,7 +64,7 @@ public class SecurityConfig {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/login", "/register").permitAll() // Permite acesso sem autenticação
+                .requestMatchers(PUBLIC_MATCHES_POST).permitAll()
                 .anyRequest().authenticated() // Requer autenticação para todas as outras rotas
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(http), jwtUtil))

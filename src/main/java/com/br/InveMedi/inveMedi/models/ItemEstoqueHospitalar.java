@@ -1,5 +1,6 @@
 package com.br.InveMedi.inveMedi.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,12 +8,15 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = ItemEstoqueHospitalar.TABLE_NAME)
+@Table(name = ItemEstoqueHospitalar.TABLE_NAME, uniqueConstraints = {
+        @UniqueConstraint(columnNames = "nome_item")
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+
 
 public class ItemEstoqueHospitalar {
 
@@ -23,14 +27,12 @@ public class ItemEstoqueHospitalar {
     private Long id;
 
 
-    @Column(name = "nome_item", nullable = false)
+    @Column(name = "nome_item", nullable = false, unique = true)
     private String nomeItem;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-
 
 
     @Column(name = "quantidade_estoque", nullable = false)

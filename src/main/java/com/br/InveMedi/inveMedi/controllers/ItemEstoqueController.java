@@ -17,7 +17,6 @@ public class ItemEstoqueController {
 
     private ItemEstoqueService itemEstoqueService;
 
-
     public ItemEstoqueController (ItemEstoqueService itemEstoqueService) {
         this.itemEstoqueService = itemEstoqueService;
     }
@@ -28,9 +27,9 @@ public class ItemEstoqueController {
         return ResponseEntity.ok(obj);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ItemEstoqueHospitalar>> findAllUserId(@PathVariable Long userId){
-        List<ItemEstoqueHospitalar> objs = this.itemEstoqueService.findAllByUserId(userId);
+    @GetMapping("/user")
+    public ResponseEntity<List<ItemEstoqueHospitalar>> findAllUserId(){
+        List<ItemEstoqueHospitalar> objs = this.itemEstoqueService.findAllByUser();
         return ResponseEntity.ok().body(objs);
     }
 
