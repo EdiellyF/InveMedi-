@@ -2,35 +2,57 @@ package com.br.InveMedi.inveMedi.services;
 
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
 import com.br.InveMedi.inveMedi.models.User;
+import com.br.InveMedi.inveMedi.models.enums.ProfileEnum;
 import com.br.InveMedi.inveMedi.repositories.ItemEstoqueHospitalarRepository;
+import com.br.InveMedi.inveMedi.security.UserSpringSecurity;
+import com.br.InveMedi.inveMedi.services.exceptions.AuthorizationException;
 import com.br.InveMedi.inveMedi.services.exceptions.DataBindingViolationException;
 import com.br.InveMedi.inveMedi.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class ItemEstoqueService {
 
-    @Autowired
-    private ItemEstoqueHospitalarRepository itemEstoqueHospitalarRepository;
-
-    @Autowired
+    private ItemEstoqueHospitalarRepository itemEstoqueHospitalarRepository ;
     private UserService userService;
+
+    public ItemEstoqueService(ItemEstoqueHospitalarRepository itemEstoqueHospitalarRepository,UserService userService){
+        this.itemEstoqueHospitalarRepository = itemEstoqueHospitalarRepository;
+        this.userService = userService;
+    }
 
 
     public ItemEstoqueHospitalar findById(Long id){
 
-        Optional<ItemEstoqueHospitalar> item = this.itemEstoqueHospitalarRepository.findById(id);
-        return item.orElseThrow(() -> new ObjectNotFoundException("ItemHospital não encontrado +  id:" + id + ", Tipo: " + ItemEstoqueHospitalar.class.getName()));
+        ItemEstoqueHospitalar item = this.itemEstoqueHospitalarRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("ItemHospital não encontrado +  id:" + id + ", Tipo: " + ItemEstoqueHospitalar.class.getName()));
+
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+
+        if(Objects.isNull(userSpringSecurity)
+                || !userSpringSecurity.hasRole(ProfileEnum.ADMIN)
+                && !userHasItemEstoque(userSpringSecurity, item)){
+            throw new AuthorizationException("Acesso negado");
+        }
+
+
+        return item;
     }
 
     @Transactional
     public ItemEstoqueHospitalar create(ItemEstoqueHospitalar obj){
-        User user = this.userService.findById(obj.getUser().getId());
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+
+        if(Objects.isNull(userSpringSecurity)){
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        User user = this.userService.findById(userSpringSecurity.getId());
         obj.setUser(user);
         obj.setId(null);
         obj = this.itemEstoqueHospitalarRepository.save(obj);
@@ -56,10 +78,23 @@ public class ItemEstoqueService {
         }
     }
 
-    public List<ItemEstoqueHospitalar> findAllByUserId(Long userId){
-        userService.findById(userId);
-        List<ItemEstoqueHospitalar> itens = itemEstoqueHospitalarRepository.findByUser_Id(userId);
+    public List<ItemEstoqueHospitalar> findAllByUser(){
+
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+
+        if(Objects.isNull(userSpringSecurity)){
+            throw new AuthorizationException("Acesso negado");
+        }
+        List<ItemEstoqueHospitalar> itens = itemEstoqueHospitalarRepository.findByUser_Id(userSpringSecurity.getId());
+
         return itens;
     }
+
+
+    private Boolean userHasItemEstoque(UserSpringSecurity userSpringSecurity, ItemEstoqueHospitalar itemEstoqueHospitalar){
+       return itemEstoqueHospitalar.getUser().getId().equals(userSpringSecurity.getId());
+    }
+
+
 
 }
