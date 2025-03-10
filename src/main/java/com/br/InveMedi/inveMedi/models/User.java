@@ -4,6 +4,7 @@ package com.br.InveMedi.inveMedi.models;
 import com.br.InveMedi.inveMedi.models.enums.ProfileEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,21 +21,13 @@ import java.util.stream.Collectors;
         uniqueConstraints = @UniqueConstraint(columnNames = "email")
 )
 
-@Data
+
 @NoArgsConstructor
 @EqualsAndHashCode
-@Getter
-@Setter
-
-
+@Data
 public class User {
 
 
-    public interface CreateUser {
-    }
-
-    public interface UpdateUser {
-    }
 
 
     public static final String TABLE_NAME = "usuario";
@@ -44,22 +37,19 @@ public class User {
     private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true)
-    @NotEmpty(groups = CreateUser.class)
-    @Size(groups = CreateUser.class, min = 2, max = 100)
+    @Size( min = 2, max = 100)
+    @NotBlank
     private String username;
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
-    @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
-    @Size(groups = CreateUser.class, min = 2, max = 100)
+    @Size(min = 2, max = 100)
+    @NotBlank
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotEmpty
-    @NotNull(groups = CreateUser.class)
     @Column(name = "password", length = 60, nullable = false)
-
-    @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
-    @Size(groups = {CreateUser.class, UpdateUser.class}, min = 6, max = 60)
+    @Size( min = 6, max = 60)
+    @NotBlank
     private String password;
 
 
