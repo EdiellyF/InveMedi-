@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 
 
-import org.springframework.http.HttpMethod
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -36,6 +35,7 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
+
     private AuthenticationManager authenticationManager;
 
     private final UserDetailsService userDetailsService;
@@ -43,6 +43,7 @@ public class SecurityConfig {
     public SecurityConfig(UserDetailsService userDetailsService, JwtUtil jwtUtil) {
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
+
     }
 
 
@@ -67,7 +68,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz

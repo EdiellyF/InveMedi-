@@ -94,9 +94,6 @@ public class ItemEstoqueService {
 
         List<ItemProjection> itens = itemEstoqueHospitalarRepository.findByUser_Id(userSpringSecurity.getId());
 
-        List<ItemEstoqueHospitalar> itens = itemEstoqueHospitalarRepository.findByUser_Id(userSpringSecurity.getId());
-
-
         return itens;
     }
 
