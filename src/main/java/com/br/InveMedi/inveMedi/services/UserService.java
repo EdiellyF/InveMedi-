@@ -2,6 +2,8 @@ package com.br.InveMedi.inveMedi.services;
 
 
 import com.br.InveMedi.inveMedi.models.User;
+import com.br.InveMedi.inveMedi.models.dto.UserCreateDTO;
+import com.br.InveMedi.inveMedi.models.dto.UserUpdateDTO;
 import com.br.InveMedi.inveMedi.models.enums.ProfileEnum;
 import com.br.InveMedi.inveMedi.repositories.UserRepository;
 import com.br.InveMedi.inveMedi.security.UserSpringSecurity;
@@ -9,10 +11,12 @@ import com.br.InveMedi.inveMedi.services.exceptions.AuthorizationException;
 import com.br.InveMedi.inveMedi.services.exceptions.DataBindingViolationException;
 import com.br.InveMedi.inveMedi.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 
 
@@ -25,12 +29,15 @@ import java.util.stream.Stream;
 @Service
 public class UserService {
 
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-    @Autowired
     private UserRepository userRepository;
+
+
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userRepository = userRepository;
+    }
+
 
 
     public User findById(Long id){
@@ -93,4 +100,20 @@ public class UserService {
         }
     }
 
+
+    public User fromDTO(@Valid UserCreateDTO obj) {
+        User user = new User();
+        user.setUsername(obj.getUsername());
+        user.setEmail(obj.getEmail());
+        user.setPassword(obj.getPassword());
+        return user;
+    }
+
+    public User fromDTO(@Valid UserUpdateDTO obj) {
+        User user = new User();
+        user.setId(obj.getId());
+        user.setEmail(obj.getEmail());
+        user.setPassword(obj.getPassword());
+        return user;
+    }
 }

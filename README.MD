@@ -20,17 +20,24 @@ InveMedi é um sistema de gerenciamento de estoque hospitalar desenvolvido com S
 - Lombok
 - JWT (JSON Web Token)
 - Maven
+- JavaScript
+- HTML
+- CSS
 
 ## Configuração do Ambiente
 
 1. Clone o repositório:
    ```sh
    git clone https://github.com/EdiellyF/inveMedi.git
-
+   ```
 
 ## Configure o banco de dados MySQL no arquivo application.properties
 
-```spring.datasource.password=123mudarspring.datasource.username=rootspring.datasource.url=jdbc:mysql://localhost:3306/invemedi?useSSL=false&serverTimezone=UTC```
+```
+spring.datasource.password=
+spring.datasource.username=
+rootspring.datasource.url=jdbc:mysql://localhost:3306/invemedi?useSSL=false&serverTimezone=UTC
+```
 
 ##Execute o projeto usando maven
 ``./mvnw spring-boot:run``
@@ -38,10 +45,12 @@ InveMedi é um sistema de gerenciamento de estoque hospitalar desenvolvido com S
 
 ### Usuários
 
-- `GET /user/{id}`: Busca um usuário pelo ID - somente usuarios admin tem essa posibilidade, coloque 1 no banco
-- `POST /user`: Cria um novo usuário // rota publica todos tem a autorizacao de criar um usuario
-- `PUT /user/{id}`: Atualiza um usuário existente - so o proprio e o admin pode atualizar
+
+- `GET /user/{id}`: Busca um usuário pelo ID (somente usuários admin têm essa possibilidade)
+- `POST /user`: Cria um novo usuário (rota pública, todos têm autorização para criar um usuário)
+- `PUT /user/{id}`: Atualiza um usuário existente (somente o próprio usuário e o admin podem atualizar)
 - `DELETE /user/{id}`: Deleta um usuário
+
 
 ### Itens de Estoque
 
@@ -50,3 +59,13 @@ InveMedi é um sistema de gerenciamento de estoque hospitalar desenvolvido com S
 - `POST /itens`: Cria um novo item de estoque
 - `PUT /itens/{id}`: Atualiza um item de estoque existente
 - `DELETE /itens/{id}`: Deleta um item de estoque
+
+## Autenticação
+
+A autenticação é feita utilizando JWT. Para obter um token, faça uma requisição `POST` para `/login` com as credenciais do usuário.
+
+## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
+
+Se tiver alguma dúvida, envie um email para [ediellyferreiradecarvalho@gmail.com](mailto:ediellyferreiradecarvalho@gmail.com).

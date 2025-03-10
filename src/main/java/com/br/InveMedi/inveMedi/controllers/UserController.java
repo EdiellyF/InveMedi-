@@ -1,8 +1,11 @@
 package com.br.InveMedi.inveMedi.controllers;
 
 import com.br.InveMedi.inveMedi.models.User;
+import com.br.InveMedi.inveMedi.models.dto.UserCreateDTO;
+import com.br.InveMedi.inveMedi.models.dto.UserUpdateDTO;
 import com.br.InveMedi.inveMedi.services.UserService;
-import org.hibernate.sql.Update;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,19 +29,21 @@ public class UserController {
     }
 
     @PostMapping
-    @Validated(User.CreateUser.class)
-    public ResponseEntity<Void> create(@Validated @RequestBody User user) {
-        this.userService.create(user);
+    public ResponseEntity<Void> create(@Validated @RequestBody UserCreateDTO user) {
+        User newUser = userService.create(userService.fromDTO(user));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(user.getId()).toUri();
+                .path("/{id}")
+                .buildAndExpand(newUser.getId())
+                .toUri();
         return ResponseEntity.created(uri).build();
     }
 
+
     @PutMapping("/{id}")
-    @Validated(User.UpdateUser.class)
-    public ResponseEntity<Void> update(@Validated @RequestBody User obj, @PathVariable Long id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody UserUpdateDTO obj, @PathVariable Long id) {
         obj.setId(id);
-        this.userService.update(obj);
+        User user = this.userService.fromDTO(obj);
+        this.userService.update(user);
         return ResponseEntity.noContent().build();
     }
 

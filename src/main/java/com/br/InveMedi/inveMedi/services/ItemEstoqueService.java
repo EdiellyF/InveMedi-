@@ -3,6 +3,9 @@ package com.br.InveMedi.inveMedi.services;
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
 import com.br.InveMedi.inveMedi.models.User;
 import com.br.InveMedi.inveMedi.models.enums.ProfileEnum;
+
+import com.br.InveMedi.inveMedi.models.projection.ItemProjection;
+
 import com.br.InveMedi.inveMedi.repositories.ItemEstoqueHospitalarRepository;
 import com.br.InveMedi.inveMedi.security.UserSpringSecurity;
 import com.br.InveMedi.inveMedi.services.exceptions.AuthorizationException;
@@ -52,6 +55,7 @@ public class ItemEstoqueService {
             throw new AuthorizationException("Acesso negado");
         }
 
+
         User user = this.userService.findById(userSpringSecurity.getId());
         obj.setUser(user);
         obj.setId(null);
@@ -78,14 +82,20 @@ public class ItemEstoqueService {
         }
     }
 
-    public List<ItemEstoqueHospitalar> findAllByUser(){
+
+    public List<ItemProjection> findAllByUser(){
+
 
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
 
         if(Objects.isNull(userSpringSecurity)){
             throw new AuthorizationException("Acesso negado");
         }
+
+        List<ItemProjection> itens = itemEstoqueHospitalarRepository.findByUser_Id(userSpringSecurity.getId());
+
         List<ItemEstoqueHospitalar> itens = itemEstoqueHospitalarRepository.findByUser_Id(userSpringSecurity.getId());
+
 
         return itens;
     }

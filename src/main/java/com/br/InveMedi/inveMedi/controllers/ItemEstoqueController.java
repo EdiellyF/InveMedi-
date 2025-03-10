@@ -1,6 +1,7 @@
 package com.br.InveMedi.inveMedi.controllers;
 
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
+import com.br.InveMedi.inveMedi.models.projection.ItemProjection;
 import com.br.InveMedi.inveMedi.services.ItemEstoqueService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,8 +29,10 @@ public class ItemEstoqueController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<ItemEstoqueHospitalar>> findAllUserId(){
-        List<ItemEstoqueHospitalar> objs = this.itemEstoqueService.findAllByUser();
+
+    public ResponseEntity<List<ItemProjection>> findAllUserId(){
+        List<ItemProjection> objs = this.itemEstoqueService.findAllByUser();
+
         return ResponseEntity.ok().body(objs);
     }
 
@@ -43,8 +46,7 @@ public class ItemEstoqueController {
     }
 
     @PutMapping("/{id}")
-    @Validated
-    public  ResponseEntity<Void> update(@Validated @RequestBody ItemEstoqueHospitalar itemEstoqueHospitalar, @PathVariable Long id){
+    public  ResponseEntity<Void> update(@RequestBody ItemEstoqueHospitalar itemEstoqueHospitalar, @PathVariable Long id){
         itemEstoqueHospitalar.setId(id);
         itemEstoqueService.update(itemEstoqueHospitalar);
         return ResponseEntity.noContent().build();

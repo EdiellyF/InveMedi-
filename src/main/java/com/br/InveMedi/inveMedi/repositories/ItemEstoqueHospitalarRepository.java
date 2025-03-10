@@ -1,6 +1,7 @@
 package com.br.InveMedi.inveMedi.repositories;
 
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
+import com.br.InveMedi.inveMedi.models.projection.ItemProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +20,6 @@ public interface ItemEstoqueHospitalarRepository extends JpaRepository<ItemEstoq
 
 
     @Query(value = "SELECT * FROM  item_estoque_hospitalar i WHERE i.user_id = :user_id" ,nativeQuery = true)
-    List<ItemEstoqueHospitalar>  findByUser_Id(@Param("user_id") Long id);
+    List<ItemProjection>  findByUser_Id(@Param("user_id") Long id);
 
 }
