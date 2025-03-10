@@ -18,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+
 public class ItemEstoqueHospitalar {
 
     public static final String TABLE_NAME = "item_estoque_hospitalar";
@@ -27,9 +28,11 @@ public class ItemEstoqueHospitalar {
     private Long id;
 
 
+
     @Column(name = "nome_item", unique = true)
     @NotBlank
     private String nomeitem;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

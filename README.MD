@@ -45,6 +45,7 @@ rootspring.datasource.url=jdbc:mysql://localhost:3306/invemedi?useSSL=false&serv
 
 ### Usuários
 
+
 - `GET /user/{id}`: Busca um usuário pelo ID (somente usuários admin têm essa possibilidade)
 - `POST /user`: Cria um novo usuário (rota pública, todos têm autorização para criar um usuário)
 - `PUT /user/{id}`: Atualiza um usuário existente (somente o próprio usuário e o admin podem atualizar)

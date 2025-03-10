@@ -18,6 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+
+
+
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,10 +32,12 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserRepository userRepository;
 
+
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
     }
+
 
 
     public User findById(Long id){
@@ -69,7 +74,7 @@ public class UserService {
 
 
     @Transactional
-    public User update(User user) {
+    public  User update(User user) {
         User newObj = findById(user.getId());
 
 

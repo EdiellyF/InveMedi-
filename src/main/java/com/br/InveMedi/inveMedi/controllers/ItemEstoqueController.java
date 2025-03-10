@@ -29,8 +29,10 @@ public class ItemEstoqueController {
     }
 
     @GetMapping("/user")
+
     public ResponseEntity<List<ItemProjection>> findAllUserId(){
         List<ItemProjection> objs = this.itemEstoqueService.findAllByUser();
+
         return ResponseEntity.ok().body(objs);
     }
 
