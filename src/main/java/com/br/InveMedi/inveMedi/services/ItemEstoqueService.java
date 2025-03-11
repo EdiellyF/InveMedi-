@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,6 +96,16 @@ public class ItemEstoqueService {
         List<ItemProjection> itens = itemEstoqueHospitalarRepository.findByUser_Id(userSpringSecurity.getId());
 
         return itens;
+    }
+
+    public List<String> findUsernameByUser(){
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+
+        if(Objects.isNull(userSpringSecurity)){
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        return Collections.singletonList(itemEstoqueHospitalarRepository.findUserNameByUser_Id(userSpringSecurity.getId()).get(0));
     }
 
 

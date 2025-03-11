@@ -18,8 +18,10 @@ public class ItemEstoqueController {
 
     private ItemEstoqueService itemEstoqueService;
 
+
     public ItemEstoqueController (ItemEstoqueService itemEstoqueService) {
         this.itemEstoqueService = itemEstoqueService;
+
     }
 
     @GetMapping("/{id}")
@@ -29,12 +31,17 @@ public class ItemEstoqueController {
     }
 
     @GetMapping("/user")
-
     public ResponseEntity<List<ItemProjection>> findAllUserId(){
         List<ItemProjection> objs = this.itemEstoqueService.findAllByUser();
-
         return ResponseEntity.ok().body(objs);
     }
+
+    @GetMapping("/username")
+    public ResponseEntity<List<String>> findAllUserName() {
+        List<String> objs = this.itemEstoqueService.findUsernameByUser(); // Assuming the service returns the full entity
+        return ResponseEntity.ok().body(objs);
+    }
+
 
     @PostMapping
     @Validated

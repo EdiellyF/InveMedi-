@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -20,6 +21,7 @@ public class JwtUtil {
     private Long expiration;
 
 
+
     public String generateToken(String email) {
         SecretKey key = getKeyBySecret();
         return Jwts.builder()
@@ -28,6 +30,7 @@ public class JwtUtil {
                 .signWith(key)
                 .compact();
     }
+
 
     private SecretKey getKeyBySecret(){
 
@@ -38,6 +41,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(this.secret.getBytes());
 
     }
+
 
 
     public boolean isValidateToken(String token) {
