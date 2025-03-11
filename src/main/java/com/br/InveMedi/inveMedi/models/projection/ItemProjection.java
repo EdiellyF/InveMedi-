@@ -1,9 +1,16 @@
 package com.br.InveMedi.inveMedi.models.projection;
 
 
+import com.br.InveMedi.inveMedi.models.User;
+
 public interface ItemProjection {
 
-    public Long getId();
+   Long getId();
 
-    public Integer getQuantidadeEstoque();
+     Integer getQuantidadeEstoque();
+
+    Integer getquantidadeMinima();
+
+    String getNomeitem();
+
 }
