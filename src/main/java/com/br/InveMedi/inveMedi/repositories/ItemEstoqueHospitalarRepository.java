@@ -2,7 +2,7 @@ package com.br.InveMedi.inveMedi.repositories;
 
 import com.br.InveMedi.inveMedi.models.ItemEstoqueHospitalar;
 import com.br.InveMedi.inveMedi.models.projection.ItemProjection;
-import com.br.InveMedi.inveMedi.models.projection.UsernameProjection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -4,11 +4,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>InveMedi - Estoque Hospitalar</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link
+                href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+                rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.js"></script>
         <link rel="stylesheet" href="./src/login.css">
 
     </head>
     <body>
+
 
         <main class="main-content">
             <header class="main-header"> 
@@ -16,8 +21,56 @@
                 <div><h1 class="main-title">Hospital</h1></div>
             </header>
 </main>
+
+
+
     <main class="login-main">
+
+
+
         <section>
+            <div
+                    id="okToast"
+                    class="toast"
+                    role="alert"
+                    aria-live="assertive"
+                    aria-atomic="true"
+            > <div class="toast-header">
+                <strong class="me-auto">Success</strong>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"
+                ></button>
+            </div>
+                <div class="toast-body">
+                    Successfully login, redirecting to logged area.
+                </div>
+            </div>
+
+            <div
+                    id="errorToast"
+                    class="toast align-items-center"
+                    role="alert"
+                    aria-live="assertive"
+                    aria-atomic="true"
+                    data-bs-delay="3000"
+            >
+                <div class="toast-header bg-danger text-white">
+                    <strong class="me-auto">Error</strong>
+                    <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="toast"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <div class="toast-body">
+                    Failed to login. Please check your credentials.
+                </div>
+            </div>
+
             <div class="login-container">
                 <header class="titulos">
                     <h2>InveMedi - Estoque Hospitalar</h2>
