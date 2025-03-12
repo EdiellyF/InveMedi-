@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Item</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body >
+    <main class="main-content">
+        <header class="main-header"> 
+               <div><span class="logo-hospital"> + </span></div>
+            <div><h1 class="main-title">Hospital</h1></div>
+        </header>
+
+
+    <section class="d-flex justify-content-center align-items-center mt-3" style="min-height: 80vh;">
+      
+        <div class="form-container">
+            <header class="titulos"></header>
+                <h2>Cadastro de Item no Estoque</h2>
+                <p class="title">Preencha os dados do item</p>
+            </header>
+            
+            <form id="itemForm" method="POST" class="form">
+                <div class="mb-3 d-flex flex-column">
+                    <label for="nomeitem" class="form-label mb-2">Nome do Item</label>
+                    <input type="text" class="form-control" id="nomeitem" name="nomeitem" placeholder="Nome do item" required>
+                </div>
+
+                <div class="mb-3 d-flex flex-column">
+                    <label for="quantidadeEstoque" class="form-label mb-2">Quantidade em Estoque</label>
+                    <input type="number" class="form-control" id="quantidadeEstoque" name="quantidadeEstoque" placeholder="Quantidade" required min="0">
+                </div>
+
+                <div class="mb-3 d-flex flex-column">
+                    <label for="quantidadeMinima" class="form-label mb-2">Quantidade Mínima</label>
+                    <input type="number" class="form-control" id="quantidadeMinima" name="quantidadeMinima" placeholder="Quantidade mínima" required min="0">
+                </div>
+
+                <div class="mb-3 d-flex flex-column">
+                    <label for="dataValidade" class="form-label mb-2">Data de Validade</label>
+                    <input type="date" class="form-control" id="dataValidade" name="dataValidade">
+                </div>
+
+
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    </main>
+
+
+    <script src="./src/scripts/cadastrarItem.js"></script>
+</body>
+</html>

@@ -44,8 +44,7 @@ public class ItemEstoqueController {
 
 
     @PostMapping
-    @Validated
-    public ResponseEntity<Void> create(@Validated @RequestBody ItemEstoqueHospitalar itemEstoqueHospitalar){
+    public ResponseEntity<Void> create(@RequestBody ItemEstoqueHospitalar itemEstoqueHospitalar){
         itemEstoqueService.create(itemEstoqueHospitalar);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(itemEstoqueHospitalar.getId()).toUri();

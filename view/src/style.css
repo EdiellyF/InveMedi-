@@ -69,3 +69,17 @@ body {
    margin-top: 20px;
    margin-bottom: 2px;
 }
+
+.editar, .excluir, .acoes-edicoes {
+  padding: 8px;
+    border-style: none;
+    color: #ffffff;
+    border-radius: 20px;
+    background-color: #0D6EFD;
+}
+
+
+.editado {
+   background-color: gray;
+}
+
