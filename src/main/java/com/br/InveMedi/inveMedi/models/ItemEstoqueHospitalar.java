@@ -30,7 +30,7 @@ public class ItemEstoqueHospitalar {
 
 
     @Column(name = "nome_item", unique = true)
-    @NotBlank
+    @NotBlank(message = "O nome do item não pode estar em branco.")
     private String nomeitem;
 
 
@@ -50,10 +50,6 @@ public class ItemEstoqueHospitalar {
     @Column(name = "data_validade")
     private LocalDate dataValidade;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "tipo_item", joinColumns = @JoinColumn(name = "item_estoque_id"))
-    @Column(name = "tipos", nullable = false)
-    private Set<Integer> itens = new HashSet<>();
 
 
 
