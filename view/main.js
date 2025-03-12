@@ -32,20 +32,23 @@ function show(itens) {
     let tab = `
         <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">nome Item</th>
                 <th scope="col">Quantidade Estoque</th>
                 <th scope="col">Quantidade Mínima Estoque</th>
+                <th scope="col">Açoes </th>
             </tr>
         </thead>
         <tbody>
             ${itens.map(item => `
-                <tr>
-                    <td>${item.id}</td>
+                <tr >
+                    <td>${item.nomeItem}</td>
                     <td>${item.quantidadeEstoque}</td>
                     <td>${item.quantidadeMinima}</td>
+                    <td ><button id="${item.id}" onclick="excluirItem()" class="excluir">excluir</button></td>
                 </tr>`).join('')}
         </tbody>
     `;
+
 
     document.getElementById("itens").innerHTML = tab;
 }
@@ -56,11 +59,15 @@ async function getItens() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+
     if (!localStorage.getItem("Authorization")) {
-        window.location.href = "/view/login.html";
+        window.location.href = "./login.html";
     } else {
+
+
         getItens();
         showName();
+
     }
 });
 
@@ -72,11 +79,44 @@ document.addEventListener("DOMContentLoaded", function () {
 async function showName(){
    const nome = document.querySelector('.welcome');
    const valueName = await getName();
-
-   console.log(valueName)
-   nome.innerText += " " + valueName;
+   if (valueName){
+       console.log(valueName)
+       nome.innerText += " " + valueName;
+   }
  }
 
 
+ async function excluirItem() {
+     if (confirm("Voce deseja excluir?")) {
+
+         const botao = document.querySelector('.excluir');
+         console.log(botao)
+         const celula = botao.parentElement;
+         const linha = celula.parentElement;
+         linha.remove();
+         try {
+             const response = await fetch(`${BASE_URL}/${botao.id}`, {
+                 method: "DELETE",
+                 headers: {
+                     "Authorization": localStorage.getItem("Authorization"),
+                     "Content-Type": "application/json"
+                 }
+             });
+
+             if (!response.ok) {
+                 throw new Error("Erro ao excluir o item.");
+             }
+
+             linha.remove();
+             console.log("Item removido com sucesso.");
+
+         } catch (error) {
+             console.error("Erro ao excluir:", error);
+             alert("Erro ao excluir o item.");
+         }
 
 
+     }
+
+
+ }

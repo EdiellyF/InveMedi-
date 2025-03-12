@@ -1,50 +1,53 @@
-document.querySelector(".logar").addEventListener("click", login);
 
-async function login(event) {
-    event.preventDefault()
-    let email = document.getElementById("email").value;
-    let senha = document.getElementById("senha").value;
+const botaoCadastrar = document.querySelector(".cadastrar");
 
-    console.log("Tentando logar com:", email, senha);
+if (botaoCadastrar) {
+    botaoCadastrar.addEventListener("click", handleLogin);
+} else {
+    console.error("Botão de cadastro não encontrado!");
+}
 
+
+async function handleLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const username = document.getElementById("nome").value.trim();
     try {
-        const response = await fetch("http://localhost:8080/login", {
+        const response = await fetch("http://localhost:8080/user", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json; charset=utf-8",
+                "Content-Type": "application/json",
                 Accept: "application/json",
             },
-            body: JSON.stringify({
-                email: email,
-                password: senha,
-            })
+            body: JSON.stringify({ email, username, password: senha })
         });
 
         if (!response.ok) {
-            throw new Error("Falha ao logar. Status: " + response.status);
+            const errorData = await response.json().catch(() => null); // Tenta converter a resposta para JSON
+            console.error("Erro na requisição:", errorData);
+
+            const errorMessage = errorData?.message ||
+                (response.status === 409 ? "Email ou nome de usuário já existem." : "Erro ao conectar ao servidor.");
+
+            alert(errorMessage);
+            return;
         }
 
-        let token = response.headers.get("Authorization");
 
-        if (!token) {
-            throw new Error("Token não recebido no cabeçalho da resposta!");
-        }
 
-        window.localStorage.setItem("Authorization", token);
-
-        showToast("#okToast");
-
+        alert("Usuário cadastrado com sucesso!");
         setTimeout(() => {
-            window.location = "./view/index.html";
+            window.location = "./login.html";
         }, 2000);
     } catch (error) {
-        console.error("Erro no login:", error);
-        showToast("#errorToast");
+        console.error("Erro inesperado:", error);
+        alert("Falha na conexão com o servidor.");
     }
+
+
+
 }
 
-function showToast(id) {
-    let toastElList = [].slice.call(document.querySelectorAll(id));
-    let toastList = toastElList.map((toastEl) => new bootstrap.Toast(toastEl));
-    toastList.forEach((toast) => toast.show());
-}
+

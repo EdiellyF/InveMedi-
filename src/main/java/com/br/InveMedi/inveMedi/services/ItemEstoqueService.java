@@ -98,14 +98,16 @@ public class ItemEstoqueService {
         return itens;
     }
 
-    public List<String> findUsernameByUser(){
+    public List<String> findUsernameByUser() {
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
 
-        if(Objects.isNull(userSpringSecurity)){
+        if (Objects.isNull(userSpringSecurity)) {
             throw new AuthorizationException("Acesso negado");
         }
 
-        return Collections.singletonList(itemEstoqueHospitalarRepository.findUserNameByUser_Id(userSpringSecurity.getId()).get(0));
+        List<String> usernames = itemEstoqueHospitalarRepository.findUserNameByUser_Id(userSpringSecurity.getId());
+
+        return usernames.isEmpty() ? Collections.emptyList() : Collections.singletonList(usernames.get(0));
     }
 
 

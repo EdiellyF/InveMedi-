@@ -35,11 +35,11 @@ async function login(event) {
         showToast("#okToast");
 
         setTimeout(() => {
-            window.location = "/view/index.html";
+            window.location = "./index.html";
         }, 2000);
     } catch (error) {
         console.error("Erro no login:", error);
-        showToast("#errorToast");
+        showToast("#errorToast")
     }
 }
 

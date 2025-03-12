@@ -28,8 +28,9 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping
-    public ResponseEntity<Void> create(@Validated @RequestBody UserCreateDTO user) {
+    public ResponseEntity<Void> create(@RequestBody UserCreateDTO user) {
         User newUser = userService.create(userService.fromDTO(user));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
